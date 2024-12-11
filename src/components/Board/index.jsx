@@ -1,7 +1,8 @@
 import React from "react";
 import Square from "./Square";
+import { isValidMove } from "@/utils";
 
-function Board({ boardState, onClick }) {
+function Board({ boardState, onClick, currentPlayer }) {
   return (
     <div className="board">
       {boardState.map((row, rowIndex) => (
@@ -10,8 +11,13 @@ function Board({ boardState, onClick }) {
             <Square
               key={colIndex}
               value={cell}
-              text ={`${rowIndex},${colIndex}`}
+              text={`${rowIndex},${colIndex}`}
               onClick={() => onClick(rowIndex, colIndex)}
+              hoveredStyle={
+                isValidMove(boardState, rowIndex, colIndex, currentPlayer)
+                  ? currentPlayer
+                  : ''
+              }
             />
           ))}
         </div>
@@ -21,5 +27,3 @@ function Board({ boardState, onClick }) {
 }
 
 export default Board;
-
-

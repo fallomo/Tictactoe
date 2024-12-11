@@ -1,9 +1,9 @@
-/* App.css */
 .game {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  background: transparent;
 }
 
 .board {
@@ -15,17 +15,29 @@
 .row {
   display: flex;
   flex-direction: row;
+  gap: 2px;
 }
 
 .square {
   width: 50px;
   height: 50px;
   border: 1px solid #000000;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
+
+.square.hovered-White {
+  background-image: linear-gradient(45deg, #e6ffb3, #e0f7ff); /* 渐变效果 */
+}
+
+.square.hovered-Black {
+  background-image: linear-gradient(45deg, #4e4141, #2e3234); /* 渐变效果 */
+}
+
+
 
 .square.Black {
   background-color: black;

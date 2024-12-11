@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Board from "@components/Board";
 import Scoreboard from "@components/Scoreboard";
 import CurrentPlayer from "@components/CurrentPlayer";
+import { isValidMove } from "@/utils";
 import "./App.css";
 
 const SIZE = 8;
@@ -24,7 +25,7 @@ function App() {
 
   // 处理点击事件
   const handleClick = (row, col) => {
-    if (!isValidMove(boardState,row, col, currentPlayer)) return; // 检测位置是否合法
+    if (!isValidMove(boardState, row, col, currentPlayer)) return; // 检测位置是否合法
 
     // 执行翻转逻辑
     const newBoardState = [...boardState];
@@ -42,7 +43,6 @@ function App() {
       setCurrentPlayer(currentPlayer === "Black" ? "White" : "Black");
     }
   };
-
 
   // 翻转棋子的方法
   const flipDiscs = (board, row, col, player) => {
@@ -108,49 +108,9 @@ function App() {
     <div className="game">
       <Scoreboard blackScore={blackScore} whiteScore={whiteScore} />
       <CurrentPlayer currentPlayer={currentPlayer} />
-      <Board boardState={boardState} onClick={handleClick} />
+      <Board boardState={boardState} onClick={handleClick} currentPlayer={currentPlayer} />
     </div>
   );
 }
 
 export default App;
-
-  // 判断某个位置是否是合法走法
-  const isValidMove = (board, row, col, color) => {
-    if (board[row][col] !== null) return false;
-
-    const directions = [
-      [-1, 0],
-      [1, 0],
-      [0, -1],
-      [0, 1], // 上下左右
-      [-1, -1],
-      [-1, 1],
-      [1, -1],
-      [1, 1], // 四个对角线
-    ];
-
-    let isValid = false;
-
-    directions.forEach(([dx, dy]) => {
-      let r = row + dx;
-      let c = col + dy;
-      let foundOpponent = false;
-
-      while (r >= 0 && r < SIZE && c >= 0 && c < SIZE) {
-        const cell = board[r][c];
-        if (cell === null) break;
-        if (cell === color) {
-          if (foundOpponent) {
-            isValid = true;
-          }
-          break;
-        }
-        foundOpponent = true;
-        r += dx;
-        c += dy;
-      }
-    });
-
-    return isValid;
-  };
