@@ -1,0 +1,43 @@
+/* App.css */
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.square {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.square.Black {
+  background-color: black;
+  color: white;
+}
+
+.square.White {
+  background-color: wheat;
+  color: black;
+}
+
+.scoreboard,
+.currentPlayer {
+  margin: 10px 0;
+}

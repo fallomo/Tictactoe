@@ -5,7 +5,7 @@ import WebpackDevServer from 'webpack-dev-server'
 
 const webpackConfig = merge(common, {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
   devServer: {
     open: ['/main.html'],
     port: 'auto',
