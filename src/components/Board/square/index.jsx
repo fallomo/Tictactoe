@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Square = ({ value, onClick, text, hoveredStyle }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const handleMouseEnter = () => {
-    console.log(hoveredStyle)
-      setIsHovered(true);
-  };
+const Square = React.memo(
+  ({
+    value,
+    onClick,
+    isHovered,
+    onMouseEnter,
+    onMouseLeave,
+    currentPlayer,
+  }) => {
+    // 判断悬停状态的颜色：黑方时显示半透明黑，白方时显示半透明黄
+    const getHoveredStyle = () => {
+      if (!isHovered) return "";
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+      if (currentPlayer === "Black") {
+        return "hovered-Black"; // 黑方的半透明黑
+      } else if (currentPlayer === "White") {
+        return "hovered-White"; // 白方的半透明黄
+      }
 
-  return (
-    <div
-      className={`square ${isHovered ? `hovered-${hoveredStyle}` : ""} ${value}`}
-      onClick={onClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      return "";
+    };
+
+    return (
+      <div
+        className={`square ${value ? value : getHoveredStyle()}`}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
-      {value}
-    </div>
-  );
-};
+        {value}
+      </div>
+    );
+  }
+);
 
 export default Square;

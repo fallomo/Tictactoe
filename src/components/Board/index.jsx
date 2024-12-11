@@ -1,23 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import Square from "./Square";
-import { isValidMove } from "@/utils";
+import { isValidMove } from "@/utils"; // 假设你有这个工具函数来判断合法走法
 
 function Board({ boardState, onClick, currentPlayer }) {
+  const [hoveredSquare, setHoveredSquare] = useState(null);  // 只保存当前悬停的棋盘格
+
+  const handleMouseEnter = (rowIndex, colIndex) => {
+    // 如果是合法走法，设置当前悬停的棋盘格
+    if (isValidMove(boardState, rowIndex, colIndex, currentPlayer)) {
+      setHoveredSquare([rowIndex, colIndex]);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredSquare(null);  // 离开时清除悬停状态
+  };
+
   return (
     <div className="board">
       {boardState.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
           {row.map((cell, colIndex) => (
             <Square
-              key={colIndex}
+              key={`${rowIndex}-${colIndex}`}
               value={cell}
-              text={`${rowIndex},${colIndex}`}
               onClick={() => onClick(rowIndex, colIndex)}
-              hoveredStyle={
-                isValidMove(boardState, rowIndex, colIndex, currentPlayer)
-                  ? currentPlayer
-                  : ''
-              }
+              isHovered={hoveredSquare ? hoveredSquare[0] === rowIndex && hoveredSquare[1] === colIndex : false}  // 判断该格子是否悬停
+              onMouseEnter={() => handleMouseEnter(rowIndex, colIndex)}
+              onMouseLeave={handleMouseLeave}
+              currentPlayer={currentPlayer}  // 传递当前玩家信息
             />
           ))}
         </div>
