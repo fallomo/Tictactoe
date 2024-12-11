@@ -1,7 +1,7 @@
 {
   "name": "tictactoe",
   "version": "1.0.0",
-  "description": "JS实现的井字棋，逐渐迁移到TS ",
+  "description": "JS实现的翻转棋，逐渐迁移到TS ",
   "private": true,
   "type": "module",
   "main": "index.js",
