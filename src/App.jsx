@@ -24,7 +24,7 @@ function App() {
 
   // 处理点击事件
   const handleClick = (row, col) => {
-    if (boardState[row][col] || !isValidMove(row,col,currentPlayer)) return; // 如果该位置已被占据，返回
+    if (!isValidMove(boardState,row, col, currentPlayer)) return; // 检测位置是否合法
 
     // 执行翻转逻辑
     const newBoardState = [...boardState];
@@ -43,40 +43,6 @@ function App() {
     }
   };
 
-    // 判断某个位置是否是合法走法
- const isValidMove = (row, col, color)=> {
-  if (boardState[row][col] !== null) return false;
-
-  const directions = [
-      [-1, 0], [1, 0], [0, -1], [0, 1], // 上下左右
-      [-1, -1], [-1, 1], [1, -1], [1, 1]  // 四个对角线
-  ];
-
-  let isValid = false;
-
-  directions.forEach(([dx, dy]) => {
-      let r = row + dx;
-      let c = col + dy;
-      let foundOpponent = false;
-
-      while (r >= 0 && r < SIZE && c >= 0 && c < SIZE) {
-          const cell = boardState[r][c];
-          if (cell === null) break;
-          if (cell === color) {
-              if (foundOpponent) {
-                  isValid = true;
-              }
-              break;
-          }
-          foundOpponent = true;
-          r += dx;
-          c += dy;
-      }
-  });
-
-  return isValid;
-}
-
 
   // 翻转棋子的方法
   const flipDiscs = (board, row, col, player) => {
@@ -85,7 +51,14 @@ function App() {
 
     // 遍历 8 个方向
     const directions = [
-      [-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+      [-1, -1],
+      [-1, 1],
+      [1, -1],
+      [1, 1],
     ];
 
     for (const [dx, dy] of directions) {
@@ -94,7 +67,13 @@ function App() {
       let toFlip = [];
 
       // 继续遍历直到遇到同色棋子或者越界
-      while (x >= 0 && x < SIZE && y >= 0 && y < SIZE && board[x][y] === opponent) {
+      while (
+        x >= 0 &&
+        x < SIZE &&
+        y >= 0 &&
+        y < SIZE &&
+        board[x][y] === opponent
+      ) {
         toFlip.push([x, y]);
         x += dx;
         y += dy;
@@ -102,12 +81,9 @@ function App() {
 
       // 如果遇到同色棋子，翻转该路径上的棋子
       if (x >= 0 && x < SIZE && y >= 0 && y < SIZE && board[x][y] === player) {
-        console.log(toFlip);
         flipped = true;
         toFlip.forEach(([flipX, flipY]) => {
-          console.log(flipX,flipY,player);
           board[flipX][flipY] = player;
-          console.log(board);
         });
       }
     }
@@ -117,7 +93,8 @@ function App() {
 
   // 计算分数
   const countScores = (board) => {
-    let black = 0, white = 0;
+    let black = 0,
+      white = 0;
     for (let i = 0; i < SIZE; i++) {
       for (let j = 0; j < SIZE; j++) {
         if (board[i][j] === "Black") black++;
@@ -138,3 +115,42 @@ function App() {
 
 export default App;
 
+  // 判断某个位置是否是合法走法
+  const isValidMove = (board, row, col, color) => {
+    if (board[row][col] !== null) return false;
+
+    const directions = [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1], // 上下左右
+      [-1, -1],
+      [-1, 1],
+      [1, -1],
+      [1, 1], // 四个对角线
+    ];
+
+    let isValid = false;
+
+    directions.forEach(([dx, dy]) => {
+      let r = row + dx;
+      let c = col + dy;
+      let foundOpponent = false;
+
+      while (r >= 0 && r < SIZE && c >= 0 && c < SIZE) {
+        const cell = board[r][c];
+        if (cell === null) break;
+        if (cell === color) {
+          if (foundOpponent) {
+            isValid = true;
+          }
+          break;
+        }
+        foundOpponent = true;
+        r += dx;
+        c += dy;
+      }
+    });
+
+    return isValid;
+  };
