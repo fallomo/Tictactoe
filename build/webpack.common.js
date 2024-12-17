@@ -32,10 +32,7 @@ export default {
         test: /\.m?(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
+          loader: "babel-loader",  // 详见babel.config.js
         }
       },
       {
@@ -64,8 +61,8 @@ export default {
       handler(percentage, message, ...args) {
         if (percentage <= 0.03) {
           progressStartTime = Date.now();
-        } else if (percentage > 0.03 && percentage < 1) {
-          console.log(`进度：${(percentage * 100).toFixed(0) + '% '}：${message}：${args.join(' ')}`)
+        // } else if (percentage > 0.03 && percentage < 1) {
+          // console.log(`进度：${(percentage * 100).toFixed(0) + '% '}：${message}：${args.join(' ')}`) // 用于构建卡住时追踪细节 
         } else if (percentage === 1) {
           const cost = Date.now() - progressStartTime;
           process.stdout.write('\n');
