@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Board from "@components/Board";
-import Scoreboard from "@components/Scoreboard";
+import Scoreboard from "@components/ScoreBoard";
 import CurrentPlayer from "@components/CurrentPlayer";
 import { isValidMove } from "@/utils";
 import "./App.css";

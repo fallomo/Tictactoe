@@ -13,9 +13,9 @@ let progressStartTime = 0
 
 
 export default {
-  entry: { main: path.resolve(__dirname, '../src/index.jsx') },
+  entry: { main: path.resolve(__dirname, '../src/index.tsx') },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '@': path.resolve(__dirname, '../src'),
       '@components': path.resolve(__dirname, '../src/components'),
@@ -29,7 +29,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.m?(js|jsx)$/,
+        test: /\.m?(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",  // 详见babel.config.js
@@ -61,7 +61,7 @@ export default {
       handler(percentage, message, ...args) {
         if (percentage <= 0.03) {
           progressStartTime = Date.now();
-        // } else if (percentage > 0.03 && percentage < 1) {
+          // } else if (percentage > 0.03 && percentage < 1) {
           // console.log(`进度：${(percentage * 100).toFixed(0) + '% '}：${message}：${args.join(' ')}`) // 用于构建卡住时追踪细节 
         } else if (percentage === 1) {
           const cost = Date.now() - progressStartTime;

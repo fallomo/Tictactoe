@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=development node build",
     "build": "NODE_ENV=production node build",
+    "type-check": "tsc --watch",
     "over": "webpack"
   },
   "author": "",
@@ -18,6 +19,7 @@
     "@babel/plugin-transform-runtime": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@babel/runtime-corejs3": "^7.26.0",
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
@@ -32,6 +34,9 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
-    "react": "^19.0.0"
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "react": "^19.0.0",
+    "typescript": "^5.7.2"
   }
 }
